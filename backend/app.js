@@ -11,11 +11,23 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const app = express();
 
 // ✅ CORS
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://adorable-madeleine-57d55d.netlify.app",
+    "https://blog-project-2-w6lr.onrender.com",
+];
+if (process.env.FRONTEND_URL) allowedOrigins.push(process.env.FRONTEND_URL);
+
 app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        "https://adorable-madeleine-57d55d.netlify.app"
-    ],
+    origin: function(origin, callback) {
+        // allow requests with no origin (e.g. mobile apps, curl)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('CORS policy: This origin is not allowed'));
+        }
+    },
     credentials: true
 }));
 
@@ -40,8 +52,8 @@ app.use(session({
     name: 'sessionId',
     proxy: true,
     cookie: {
-        secure: true,
-        sameSite: "none"
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
     }
 }));
 
