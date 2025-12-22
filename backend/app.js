@@ -1,52 +1,60 @@
-const express = require ('express');
-const authRouter=require("./routes/authroutes");
+const express = require('express');
+const authRouter = require("./routes/authroutes");
 const userRouter = require("./routes/userroutes");
 const hostRouter = require("./routes/hostroutes");
-const { default: mongoose } = require('mongoose');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const session=require("express-session");
+const session = require("express-session");
 const cors = require('cors');
-const app = express();
-const MongoDBStore=require("connect-mongodb-session")(session);
+const MongoDBStore = require("connect-mongodb-session")(session);
 
-// Enable CORS with credentials
+const app = express();
+
+// ✅ CORS
 app.use(cors({
-    origin: ["http://localhost:5173","https://adorable-madeleine-57d55d.netlify.app" ],
+    origin: [
+        "http://localhost:5173",
+        "https://adorable-madeleine-57d55d.netlify.app"
+    ],
     credentials: true
 }));
 
-
-// Parse JSON bodies
 app.use(bodyParser.json());
 app.use('/uploads', express.static('uploads'));
-const MONGO_DB_URL="mongodb+srv://grishjindal22:TigerHill@cluster0.t52zxt9.mongodb.net/chatapp?retryWrites=true&w=majority";
 
+// ✅ ENV VARIABLES
+const MONGO_DB_URL = process.env.MONGO_DB_URL;
+const PORT = process.env.PORT || 5000;
+
+// ✅ Session Store
 const store = new MongoDBStore({
     uri: MONGO_DB_URL,
     collection: "sessions"
-})
+});
 
 app.use(session({
-    secret:"By Grish",
+    secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false, // changed to false to avoid storing empty sessions
+    saveUninitialized: false,
     store: store,
-    name: 'sessionId', // custom name for the session ID
-    proxy: true // if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
-}))
+    name: 'sessionId',
+    proxy: true,
+    cookie: {
+        secure: true,
+        sameSite: "none"
+    }
+}));
 
-
-app.use('/auth',express.json(),express.urlencoded( { extended: true }),authRouter);
-app.use('/user',express.json(),express.urlencoded( { extended: true }) ,  userRouter);
+app.use('/auth', authRouter);
+app.use('/user', userRouter);
 app.use('/host', hostRouter);
 
- const PORT = process.env.PORT||5001;;
-
-mongoose.connect(MONGO_DB_URL).then(() => {
-  console.log('Connected to Mongo');
-  app.listen(PORT, () => {
-    console.log(`Server running on address http://localhost:${PORT}`);
-  });
-}).catch(err => {
-  console.log('Error while connecting to Mongo: ', err);
-});
+// ✅ DB Connection
+mongoose.connect(MONGO_DB_URL)
+.then(() => {
+    console.log('Connected to MongoDB');
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+})
+.catch(err => console.log(err));
