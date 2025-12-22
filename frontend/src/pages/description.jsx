@@ -4,6 +4,7 @@ import { useEffect,useState  } from 'react';
 import UseContext from "../context/usercontest";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_BASE } from "../apiConfig";
 function Description (){
     const location =useLocation();
     const {user} = UseContext();
@@ -19,7 +20,7 @@ function Description (){
         const fetchdata= async()=>{
             try {
                     if (blogId) {
-                    const response = await fetch(`http://localhost:5001/user/all/${blogId}`,{
+                    const response = await fetch(`${API_BASE}/user/all/${blogId}`,{
                         method: "GET",
                         credentials: "include" 
                     })
@@ -42,7 +43,7 @@ function Description (){
         const fetchdata= async()=>{
             try {
                     if (blogId) {
-                    const response = await fetch(`http://localhost:5001/user/comment/${blogId}?userId=${user.id}`,{
+                    const response = await fetch(`${API_BASE}/user/comment/${blogId}?userId=${user.id}`,{
                         method: "GET",
                         credentials: "include" 
                     })
@@ -68,7 +69,7 @@ function Description (){
         const fetchdata= async()=>{
             try {
                     if (blogId) {
-                    const response = await fetch(`http://localhost:5001/user/comment/${blogId}`,{
+                    const response = await fetch(`${API_BASE}/user/comment/${blogId}`,{
                         method: "POST",
                         credentials: "include" ,
                         headers: {
@@ -100,7 +101,7 @@ function Description (){
     const handlecomment=()=>{
         const fetchdata = async()=>{
             try{
-                const response =   await fetch(`http://localhost:5001/user/addcomment/${blogId}`,{
+                const response =   await fetch(`${API_BASE}/user/addcomment/${blogId}`,{
                 method: "POST",
                 credentials: "include" ,
                 headers: {
@@ -130,7 +131,7 @@ function Description (){
     useEffect(()=>{
         if(viewcomment){
             const fetchdata=async()=>{
-                const response = await fetch(`http://localhost:5001/user/addcomment/${blogId}`,{
+                const response = await fetch(`${API_BASE}/user/addcomment/${blogId}`,{
                     method:"GET",
                     headers:{
                     "Content-Type": "application/json"

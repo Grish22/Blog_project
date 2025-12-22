@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import UseContext from "../context/usercontest";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_BASE } from "../apiConfig";
 function Hostblog() {
     const [Blogdata, setBlogData] = useState([]);
     const [view,setView] = useState({});
@@ -14,7 +15,7 @@ function Hostblog() {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const response = await fetch(`http://localhost:5001/host/all/${user.id}`, {
+                const response = await fetch(`${API_BASE}/host/all/${user.id}`, {
                     method: "GET",
                     credentials: "include",    
                 }
@@ -35,7 +36,7 @@ function Hostblog() {
     const getview= async (blogid) =>{
         const fetchdata=async()=>{
             try{
-                const response=await fetch(`http://localhost:5001/user/views/${blogid}`);
+                const response=await fetch(`${API_BASE}/user/views/${blogid}`);
                 const data = await response.json();
                 if(response){
                     console.log(blogid,data.view);
@@ -71,7 +72,7 @@ function Hostblog() {
     const handleDelete = async (blogId) => {
         const fetchData=async ()=> {
             const response = window.confirm("Are you sure you want to delete this blog?") &&
-            await fetch(`http://localhost:5001/host/delete/${blogId}`, {
+            await fetch(`${API_BASE}/host/delete/${blogId}`, {
                 method: "DELETE",
                 credentials: "include"
                 });
@@ -110,7 +111,7 @@ function Hostblog() {
                             {/* Blog Preview Image */}
                             <div className="w-full h-48 overflow-hidden rounded-t-xl">
                                 <img 
-                                    src={`http://localhost:5001/${encodeURI(blog.path.replace("\\", "/"))}`} 
+                                    src={`${API_BASE}/${encodeURI(blog.path.replace("\\", "/"))}`} 
                                     className="w-full h-full object-contain"
                                 />
                             </div>

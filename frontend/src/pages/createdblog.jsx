@@ -6,6 +6,7 @@ import UseContext from "../context/usercontest";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_BASE } from "../apiConfig";
 function CreatedBlog() {
     const location = useLocation();
     const isEdit = location.state?.isEdit || false;
@@ -35,7 +36,7 @@ function CreatedBlog() {
         //     author:user.id
         // };
         const method= isEdit? "PUT" : "POST" ;
-        const URL= !isEdit? "http://localhost:5001/host/create" :`http://localhost:5001/host/edit/${blogDataNew._id}`;
+        const URL = !isEdit ? `${API_BASE}/host/create` : `${API_BASE}/host/edit/${blogDataNew._id}`;
         const fetchCreateBlog = async () => {
             try {
                 const response = await fetch(URL, {

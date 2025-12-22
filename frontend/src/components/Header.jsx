@@ -3,6 +3,7 @@ import UseContext from "../context/usercontest";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_BASE } from "../apiConfig";
 function Header() {
     const { user,isLoggedIn, setUserfunc, setIsLoggedInfunc } = UseContext();
     const navigate = useNavigate();
@@ -11,7 +12,7 @@ function Header() {
     const handleLogout = () => {
         const fetchLogout = async () => {
             try {
-                const response = await fetch("http://localhost:5001/auth/logout", {
+                const response = await fetch(`${API_BASE}/auth/logout`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
