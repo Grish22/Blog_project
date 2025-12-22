@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import UseContext from "../context/usercontest";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_BASE } from "../apiConfig";
 function Viewblog () {
     const [Blogdata, setBlogData] = useState([]);
     const navigate=useNavigate();
@@ -12,7 +13,7 @@ function Viewblog () {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const response = await fetch("http://localhost:5001/user/all", {
+                const response = await fetch(`${API_BASE}/user/all`, {
                     method: "GET",
                     credentials: "include"
                 });
@@ -34,7 +35,7 @@ function Viewblog () {
         const fetchData = async()=>{
             try{
                 console.log(user.id);
-               const response= await fetch(`http://localhost:5001/user/views/${blogid}`,{
+               const response= await fetch(`${API_BASE}/user/views/${blogid}`,{
                    method:'POST',
                    headers: {
                         "Content-Type": "application/json"
@@ -79,7 +80,7 @@ function Viewblog () {
                             {/* Blog Image */}
                             <div className="w-full h-48 overflow-hidden rounded-t-xln">
                                 <img 
-                                    src={`http://localhost:5001/${encodeURI(blog.path.replace("\\", "/"))}`} 
+                                    src={`${API_BASE}/${encodeURI(blog.path.replace("\\", "/"))}`} 
                                     className="w-full h-full object-contain"
                                 />
                             </div>

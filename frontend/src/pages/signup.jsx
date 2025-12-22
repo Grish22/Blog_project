@@ -4,6 +4,7 @@ import UseContext from "../context/usercontest.jsx";
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_BASE } from "../apiConfig";
 function Signup() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -25,7 +26,7 @@ function Signup() {
         };
         const fetchSignup = async () => {
             try {
-                const response = await fetch("http://localhost:5001/auth/signup", {
+                const response = await fetch(`${API_BASE}/auth/signup`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

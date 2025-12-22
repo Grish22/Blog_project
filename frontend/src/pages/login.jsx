@@ -4,6 +4,7 @@ import UseContext from "../context/usercontest.jsx";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_BASE } from "../apiConfig";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ function Login() {
     e.preventDefault();
     const fetchlogin = async () => {
       try {
-        const response = await fetch("http://localhost:5001/auth/login", {
+        const response = await fetch(`${API_BASE}/auth/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
