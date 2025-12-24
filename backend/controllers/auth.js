@@ -2,14 +2,22 @@ const { check, validationResult } = require('express-validator');
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 exports.postLogin = async(req, res) => {
-    const {email, password} = req.body;
-    const user=await User.findOne({email:email});
+    let { email, password } = req.body;
+    if (!email || !password) {
+        console.log('postLogin: missing email or password');
+        return res.status(422).json({ message: "Missing email or password" });
+    }
+    // normalize email to avoid case-sensitivity issues (signup uses normalizeEmail)
+    email = String(email).toLowerCase().trim();
+    const user = await User.findOne({ email: email });
      if(!user){
+        console.log(`postLogin: user not found for email=${email}`);
         return res.status(422).json({
             message: "User not found",})
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if(!isMatch){
+        console.log(`postLogin: invalid credentials for email=${email}`);
         return res.status(422).json({
             message: "Invalid credentials",
             isLoggedIn: false})
