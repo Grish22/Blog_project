@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import UseContext from "../context/usercontest";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { API_BASE } from "../apiConfig";
@@ -41,10 +41,10 @@ function Header() {
         <nav className="w-full bg-indigo-200 shadow-lg">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16 items-center">
-                    <div className="flex-shrink-0">
-                        <a href="/" className="text-2xl font-bold text-indigo-700 hover:text-indigo-900 transition duration-150">
+                        <div className="flex-shrink-0">
+                        <Link to="/" className="text-2xl font-bold text-indigo-700 hover:text-indigo-900 transition duration-150">
                             Home
-                        </a>
+                        </Link>
                     </div>
 
                     <div className="flex items-center">
@@ -53,17 +53,17 @@ function Header() {
                                 <>
                                     {user.userType === "admin" ? (
                                         <>
-                                            <a href="/host/create" className="text-indigo-600 hover:text-indigo-900 px-3 py-2 rounded-md text-sm font-medium transition duration-150">
+                                            <Link to="/host/create" className="text-indigo-600 hover:text-indigo-900 px-3 py-2 rounded-md text-sm font-medium transition duration-150">
                                                 Create Blog
-                                            </a>
-                                            <a href="/host/all" className="text-indigo-600 hover:text-indigo-900 px-3 py-2 rounded-md text-sm font-medium transition duration-150">
+                                            </Link>
+                                            <Link to="/host/all" className="text-indigo-600 hover:text-indigo-900 px-3 py-2 rounded-md text-sm font-medium transition duration-150">
                                                 My Blogs
-                                            </a>
+                                            </Link>
                                         </>
                                     ) : (
-                                        <a href="/user/all" className="text-indigo-600 hover:text-indigo-900 px-3 py-2 rounded-md text-sm font-medium transition duration-150">
+                                        <Link to="/user/all" className="text-indigo-600 hover:text-indigo-900 px-3 py-2 rounded-md text-sm font-medium transition duration-150">
                                             View Blogs
-                                        </a>
+                                        </Link>
                                     )}
                                     <button
                                         onClick={handleLogout}
@@ -74,12 +74,12 @@ function Header() {
                                 </>
                             ) : (
                                 <>
-                                    <a href="/login" className="text-indigo-600 hover:text-indigo-900 px-3 py-2 rounded-md text-sm font-medium transition duration-150">
+                                    <Link to="/login" className="text-indigo-600 hover:text-indigo-900 px-3 py-2 rounded-md text-sm font-medium transition duration-150">
                                         Login
-                                    </a>
-                                    <a href="/signup" className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150">
+                                    </Link>
+                                    <Link to="/signup" className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150">
                                         Sign up
-                                    </a>
+                                    </Link>
                                 </>
                             )}
                         </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import UseContext from "../context/usercontest.jsx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { API_BASE } from "../apiConfig";
@@ -97,9 +97,9 @@ function Login() {
                 />
                 <label className="ml-2 block text-gray-700">Remember me</label>
               </div>
-              <a href="#" className="text-indigo-600 hover:text-indigo-500">
+              <button type="button" className="text-indigo-600 hover:text-indigo-500 bg-transparent border-0 p-0">
                 Forgot password?
-              </a>
+              </button>
             </div>
 
             {/* Login Button */}
@@ -113,9 +113,9 @@ function Login() {
             {/* Sign Up Link */}
             <p className="text-center text-sm text-gray-600 mt-4">
               Don't have an account?{" "}
-              <a href="/signup" className="text-indigo-600 hover:text-indigo-500 font-medium">
+              <Link to="/signup" className="text-indigo-600 hover:text-indigo-500 font-medium">
                 Sign up
-              </a>
+              </Link>
             </p>
           </form>
         </div>
