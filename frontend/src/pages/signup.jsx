@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from 'react';
 import UseContext from "../context/usercontest.jsx";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { API_BASE } from "../apiConfig";
@@ -158,9 +158,9 @@ function Signup() {
 
                                     <p className="text-center text-sm text-gray-600 mt-4">
                                         Already have an account?{" "}
-                                        <a href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                        <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
                                             Login
-                                        </a>
+                                        </Link>
                                     </p>
                                 </form>
                             </div>
