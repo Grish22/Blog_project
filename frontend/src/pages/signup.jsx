@@ -43,11 +43,12 @@ function Signup() {
                 }
                 else {
                     console.log(result);
-                    toast.success("Signup failed: " + result.message.join(", "));
+                    const msg = Array.isArray(result.message) ? result.message.join(', ') : (result.message || 'Signup failed');
+                    toast.error("Signup failed: " + msg);
                 }
                 console.log(result);
             } catch (error) {
-                toast.success("Error during signup: " + error.message);
+                toast.error("Error during signup: " + (error.message || error));
             }
         };
         fetchSignup();

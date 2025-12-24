@@ -16,13 +16,14 @@ function Login() {
     e.preventDefault();
     const fetchlogin = async () => {
       try {
+        const normalizedEmail = String(email).toLowerCase().trim();
         const response = await fetch(`${API_BASE}/auth/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           credentials: "include",
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({ email: normalizedEmail, password }),
         });
         const data = await response.json();
         if (response.ok) {
@@ -33,7 +34,8 @@ function Login() {
           setIsLoggedInfunc(true);
           navigate('/');
         } else {
-          toast.success("Login failed: " + data.message);
+          const msg = Array.isArray(data.message) ? data.message.join(', ') : (data.message || 'Login failed');
+          toast.error("Login failed: " + msg);
           setIsLoggedInfunc(false);
           if (data.message === "User not found") {
             navigate("/signup");
@@ -43,6 +45,7 @@ function Login() {
         }
       } catch (error) {
         console.error("Error:", error);
+        toast.error("Login error: " + (error.message || error));
       }
     };
     fetchlogin();
