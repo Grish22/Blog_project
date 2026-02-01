@@ -108,30 +108,30 @@ exports.postsignup =[
                             email: email,
                             password: hashedPassword,
                             userType: userType  
-                    });
-                return user.save().then(() => {
-                        return res.status(200).json({ message: "signup successful" ,
-                        user: {
-                            id: user._id,
-                            firstName: user.firstName,
-                            lastName: user.lastName,
-                            email: user.email,
-                            userType: user.userType
-                        }
-                    });
+                        });
+                        return user.save().then(() => {
+                            return res.status(200).json({ message: "signup successful" ,
+                            user: {
+                                id: user._id,
+                                firstName: user.firstName,
+                                lastName: user.lastName,
+                                email: user.email,
+                                userType: user.userType
+                            }
+                        });
+                        })
+                        .catch(err => {
+                            console.error('Error saving user:', err);
+                            res.status(500).json({ error: 'Internal server error' });
+                        });
+            
+                    })
+                
                 })
                 .catch(err => {
-                    console.error('Error saving user:', err);
+                    console.error('Error finding user:', err);
                     res.status(500).json({ error: 'Internal server error' });
                 });
-            
-                })
-                
-            })
-            .catch(err => {
-                console.error('Error finding user:', err);
-                res.status(500).json({ error: 'Internal server error' });
-            });
         }
     }
 ]

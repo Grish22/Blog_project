@@ -10,7 +10,7 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 
 const app = express();
 
-// ✅ CORS
+// CORS
 const allowedOrigins = [
     "http://localhost:5173",
     "https://adorable-madeleine-57d55d.netlify.app",
@@ -34,11 +34,11 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use('/uploads', express.static('uploads'));
 
-// ✅ ENV VARIABLES
+// ENV VARIABLES
 const MONGO_DB_URL = process.env.MONGO_DB_URL;
 const PORT = process.env.PORT || 5000;
 
-// ✅ Session Store
+// Session Store
 const store = new MongoDBStore({
     uri: MONGO_DB_URL,
     collection: "sessions"
@@ -61,7 +61,7 @@ app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/host', hostRouter);
 
-// ✅ DB Connection
+//  DB Connection
 mongoose.connect(MONGO_DB_URL)
 .then(() => {
     console.log('Connected to MongoDB');
