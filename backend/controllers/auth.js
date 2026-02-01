@@ -10,7 +10,7 @@ exports.postLogin = async(req, res) => {
     // normalize email to avoid case-sensitivity issues (signup uses normalizeEmail)
     email = String(email).toLowerCase().trim();
     const user = await User.findOne({ email: email });
-    if(!user){
+     if(!user){
         console.log(`postLogin: user not found for email=${email}`);
         return res.status(422).json({
             message: "User not found",})
